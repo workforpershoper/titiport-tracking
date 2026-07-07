@@ -1,168 +1,206 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Titiport Tracking</title>
 
 <style>
-
 body{
-
-background:#f5f5f5;
-font-family:Arial;
-margin:0;
-padding:0;
-
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f7fb;
+  color:#222;
 }
 
 .container{
+  max-width:760px;
+  margin:30px auto;
+  padding:20px;
+}
 
-max-width:700px;
-margin:40px auto;
-background:white;
-padding:30px;
-border-radius:15px;
-box-shadow:0px 0px 15px rgba(0,0,0,.1);
-
+.box{
+  background:white;
+  padding:26px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
 h1{
+  text-align:center;
+  color:#0b8ff0;
+  margin-bottom:8px;
+}
 
-text-align:center;
-color:#0099ff;
-
+.subtitle{
+  text-align:center;
+  color:#666;
+  font-size:14px;
+  margin-bottom:24px;
 }
 
 input{
-
-width:100%;
-padding:15px;
-font-size:18px;
-margin-top:20px;
-border-radius:10px;
-border:1px solid #ddd;
-
+  width:100%;
+  box-sizing:border-box;
+  padding:15px;
+  font-size:16px;
+  border:1px solid #ddd;
+  border-radius:12px;
 }
 
 button{
-
-margin-top:15px;
-width:100%;
-padding:15px;
-font-size:18px;
-background:#0099ff;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
-
-}
-
-button:hover{
-
-background:#0077cc;
-
+  width:100%;
+  margin-top:12px;
+  padding:15px;
+  font-size:16px;
+  border:none;
+  border-radius:12px;
+  background:#0b8ff0;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .card{
+  background:#f9fbff;
+  margin-top:18px;
+  padding:18px;
+  border-radius:14px;
+  border:1px solid #e6edf5;
+}
 
-margin-top:30px;
-background:#f7f7f7;
-padding:20px;
-border-radius:10px;
-
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  background:#e8f4ff;
+  color:#0b8ff0;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
 .row{
-
-margin-bottom:12px;
-
+  margin:8px 0;
+  line-height:1.45;
 }
 
-.title{
-
-font-weight:bold;
-
+.label{
+  font-weight:bold;
 }
 
+.status{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fff7e6;
+  font-weight:bold;
+}
+
+.note{
+  margin-top:10px;
+  color:#555;
+  font-size:14px;
+}
+
+.error{
+  margin-top:20px;
+  background:#fff0f0;
+  color:#c0392b;
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.loading{
+  margin-top:20px;
+  text-align:center;
+  color:#555;
+}
+
+@media(max-width:600px){
+  .container{
+    margin:10px auto;
+    padding:12px;
+  }
+
+  .box{
+    padding:20px;
+  }
+
+  h1{
+    font-size:24px;
+  }
+}
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
+  <div class="box">
+    <h1>📦 Titiport Tracking</h1>
+    <div class="subtitle">Cek status order berdasarkan Tracking ID, Order ID, atau Nomor WhatsApp</div>
 
-<h1>📦 Titiport Tracking</h1>
+    <input id="trackingInput" placeholder="Contoh: TTHC260707001 / ORD260707001 / 081234567890">
+    <button onclick="cekTracking()">Cek Status</button>
 
-<input
-id="tracking"
-placeholder="Masukkan Nomor Tracking / WA">
-
-<button onclick="cekTracking()">
-
-Lihat Status
-
-</button>
-
-<div id="hasil"></div>
-
+    <div id="hasil"></div>
+  </div>
 </div>
 
 <script>
+const api = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
 
-const api="https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
-  
 function cekTracking(){
+  const q = document.getElementById("trackingInput").value.trim();
+  const hasil = document.getElementById("hasil");
 
-let nomor=document.getElementById("tracking").value;
+  if(!q){
+    hasil.innerHTML = `<div class="error">Masukkan Tracking ID / Order ID / Nomor WA dulu ya.</div>`;
+    return;
+  }
 
-fetch(api+"?q="+nomor)
+  hasil.innerHTML = `<div class="loading">Sedang mencari data order...</div>`;
 
-.then(res=>res.json())
+  fetch(api + "?q=" + encodeURIComponent(q))
+    .then(res => res.json())
+    .then(data => {
+      if(!data.success || !data.data || data.data.length === 0){
+        hasil.innerHTML = `<div class="error">Order tidak ditemukan. Pastikan nomor yang dimasukkan benar.</div>`;
+        return;
+      }
 
-.then(data=>{
+      let html = "";
 
-if(data.success){
+      data.data.forEach(item => {
+        html += `
+          <div class="card">
+            <div class="badge">${item["Jenis Pengiriman"] || "Titiport Order"}</div>
 
-let d=data.data[0];
+            <div class="row"><span class="label">Tracking ID:</span> ${item["Item Tracking ID"] || "-"}</div>
+            <div class="row"><span class="label">Order ID:</span> ${item["Order ID"] || "-"}</div>
+            <div class="row"><span class="label">Nama:</span> ${item["Nama Customer"] || "-"}</div>
+            <div class="row"><span class="label">Barang:</span> ${item["Nama Barang"] || "-"}</div>
+            <div class="row"><span class="label">Qty:</span> ${item["Qty"] || "-"}</div>
+            <div class="row"><span class="label">Variasi:</span> ${item["Variasi"] || "-"}</div>
+            <div class="row"><span class="label">Batch:</span> ${item["Batch ID"] || "-"}</div>
+            <div class="row"><span class="label">ETA:</span> ${item["ETA Manual"] || "-"}</div>
 
-document.getElementById("hasil").innerHTML=`
+            <div class="status">Status: ${item["Status Order"] || "-"}</div>
 
-<div class="card">
+            <div class="note">${item["Catatan Customer"] || ""}</div>
+          </div>
+        `;
+      });
 
-<div class="row"><b>Tracking :</b> ${d["Tracking / Order ID"]}</div>
-
-<div class="row"><b>Nama :</b> ${d["Nama Customer"]}</div>
-
-<div class="row"><b>Barang :</b> ${d["Nama Barang"]}</div>
-
-<div class="row"><b>Jumlah :</b> ${d["Jumlah"]}</div>
-
-<div class="row"><b>Status :</b> ${d["Status Order"]}</div>
-
-<div class="row"><b>ETA :</b> ${d["ETA Manual"]}</div>
-
-<div class="row"><b>Catatan :</b> ${d["Catatan Customer"]}</div>
-
-</div>
-
-`;
-
-}else{
-
-document.getElementById("hasil").innerHTML="<h3>Order tidak ditemukan.</h3>";
-
+      hasil.innerHTML = html;
+    })
+    .catch(err => {
+      hasil.innerHTML = `<div class="error">Terjadi kendala saat mengambil data. Coba beberapa saat lagi.</div>`;
+    });
 }
-
-})
-
-}
-
 </script>
 
 </body>
-
 </html>
