@@ -4,155 +4,112 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Titiport Admin</title>
-
 <style>
-body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
-  margin:0;
-  padding:15px;
-}
-.box{
-  max-width:600px;
-  margin:auto;
-  background:white;
-  padding:22px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.08);
-}
-h1{
-  text-align:center;
-  color:#0b8ff0;
-}
-label{
-  font-weight:bold;
-  margin-top:12px;
-  display:block;
-}
-input, select, textarea{
-  width:100%;
-  box-sizing:border-box;
-  padding:13px;
-  margin-top:6px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-}
-button{
-  width:100%;
-  margin-top:18px;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  background:#0b8ff0;
-  color:white;
-  font-weight:bold;
-  font-size:16px;
-}
-.success{
-  margin-top:15px;
-  padding:12px;
-  background:#e9fff0;
-  color:#168a3a;
-  border-radius:10px;
-  display:none;
-}
+body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:15px}
+.box{max-width:600px;margin:auto;background:white;padding:22px;border-radius:18px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
+h1{text-align:center;color:#0b8ff0}
+label{font-weight:bold;margin-top:12px;display:block}
+input,select,textarea{width:100%;box-sizing:border-box;padding:13px;margin-top:6px;border:1px solid #ddd;border-radius:10px;font-size:15px}
+button{width:100%;margin-top:18px;padding:15px;border:none;border-radius:12px;background:#0b8ff0;color:white;font-weight:bold;font-size:16px}
+.success{margin-top:15px;padding:12px;background:#e9fff0;color:#168a3a;border-radius:10px;display:none}
+.error{margin-top:15px;padding:12px;background:#fff0f0;color:#c0392b;border-radius:10px;display:none}
 </style>
 </head>
 
 <body>
-
 <div class="box">
-  <h1>📦 Titiport Admin</h1>
+<h1>📦 Titiport Admin</h1>
 
-  <label>Item Tracking ID</label>
-  <input id="itemTrackingId" placeholder="Contoh: TTHC260709001">
+<label>Item Tracking ID</label>
+<input id="itemTrackingId" placeholder="Contoh: TTHC260709001">
 
-  <label>Order ID</label>
-  <input id="orderId" placeholder="Contoh: ORD260709001">
+<label>Order ID</label>
+<input id="orderId" placeholder="Contoh: ORD260709001">
 
-  <label>Customer ID</label>
-  <input id="customerId" placeholder="Contoh: CUS00001">
+<label>Customer ID</label>
+<input id="customerId" placeholder="Contoh: CUS00001">
 
-  <label>Nama Customer</label>
-  <input id="namaCustomer">
+<label>Nama Customer</label>
+<input id="namaCustomer">
 
-  <label>No Telp / WA</label>
-  <input id="noTelp">
+<label>No Telp / WA</label>
+<input id="noTelp">
 
-  <label>Alamat</label>
-  <textarea id="alamat"></textarea>
+<label>Alamat</label>
+<textarea id="alamat"></textarea>
 
-  <label>Kota</label>
-  <input id="kota">
+<label>Kota</label>
+<input id="kota">
 
-  <label>Nama Barang</label>
-  <input id="namaBarang">
+<label>Nama Barang</label>
+<input id="namaBarang">
 
-  <label>Qty</label>
-  <input id="qty" type="number">
+<label>Link Produk</label>
+<input id="linkProduk">
 
-  <label>Variasi</label>
-  <input id="variasi">
+<label>Qty</label>
+<input id="qty" type="number">
 
-  <label>Platform Sumber</label>
-  <select id="platform">
-    <option>Taobao</option>
-    <option>Pinduoduo</option>
-    <option>1688</option>
-    <option>JD</option>
-    <option>XHS</option>
-    <option>Offline Guangzhou</option>
-  </select>
+<label>Variasi</label>
+<input id="variasi">
 
-  <label>Jenis Pengiriman</label>
-  <select id="jenisPengiriman">
-    <option>Handcarry</option>
-    <option>Cargo Udara</option>
-    <option>Cargo Laut</option>
-  </select>
+<label>Platform Sumber</label>
+<select id="platform">
+<option>Taobao</option>
+<option>Pinduoduo</option>
+<option>1688</option>
+<option>JD</option>
+<option>XHS</option>
+<option>Offline Guangzhou</option>
+</select>
 
-  <label>Batch ID</label>
-  <input id="batchId" placeholder="Contoh: HC260711 / SEA260715">
+<label>Jenis Pengiriman</label>
+<select id="jenisPengiriman">
+<option>Handcarry</option>
+<option>Cargo Udara</option>
+<option>Cargo Laut</option>
+</select>
 
-  <label>Status Order</label>
-  <select id="statusOrder">
-    <option>Pesanan Masuk</option>
-    <option>Pembayaran Diterima</option>
-    <option>Proses Pembelian</option>
-    <option>Barang Tiba di Warehouse</option>
-    <option>Barang Sedang Dikirim Menuju Indonesia</option>
-    <option>Barang Tiba di Indonesia</option>
-    <option>Proses Repack</option>
-    <option>Pengiriman Menuju Alamat Customer</option>
-    <option>Pesanan Diterima</option>
-  </select>
+<label>Batch ID</label>
+<input id="batchId" placeholder="Contoh: HC260711 / SEA260715">
 
-  <label>ETA Manual</label>
-  <input id="etaManual" type="date">
+<label>Status Order</label>
+<select id="statusOrder">
+<option>Pesanan Masuk</option>
+<option>Pembayaran Diterima</option>
+<option>Proses Pembelian</option>
+<option>Barang Tiba di Warehouse</option>
+<option>Barang Sedang Dikirim Menuju Indonesia</option>
+<option>Barang Tiba di Indonesia</option>
+<option>Proses Repack</option>
+<option>Pengiriman Menuju Alamat Customer</option>
+<option>Pesanan Diterima</option>
+</select>
 
-  <label>Catatan Customer</label>
-  <textarea id="catatanCustomer"></textarea>
+<label>ETA Manual</label>
+<input id="etaManual" type="date">
 
-  <label>Foto Seller</label>
-  <input id="fotoSeller" placeholder="Paste link Google Drive">
+<label>Catatan Customer</label>
+<textarea id="catatanCustomer"></textarea>
 
-  <label>Foto Warehouse</label>
-  <input id="fotoWarehouse" placeholder="Paste link Google Drive">
+<label>Foto Seller</label>
+<input id="fotoSeller" placeholder="Paste link Google Drive">
 
-  <label>Foto Indonesia</label>
-  <input id="fotoIndonesia" placeholder="Paste link Google Drive">
+<label>Foto Warehouse</label>
+<input id="fotoWarehouse" placeholder="Paste link Google Drive">
 
-  <button onclick="simpanData()">Simpan ke OMS</button>
+<label>Foto Indonesia</label>
+<input id="fotoIndonesia" placeholder="Paste link Google Drive">
 
-  <div id="success" class="success">
-    Data berhasil dikirim. Cek Google Sheet / tracking website.
-  </div>
+<button onclick="simpanData()">Simpan ke OMS</button>
+
+<div id="success" class="success">Data berhasil dikirim. Cek TRACKING_PUBLIC.</div>
+<div id="error" class="error">Data gagal dikirim. Coba cek Apps Script.</div>
 </div>
 
 <script>
-const API =
-"https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
+const API = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
+
 function val(id){
   return document.getElementById(id).value.trim();
 }
@@ -167,6 +124,7 @@ function simpanData(){
     alamat: val("alamat"),
     kota: val("kota"),
     namaBarang: val("namaBarang"),
+    linkProduk: val("linkProduk"),
     qty: val("qty"),
     variasi: val("variasi"),
     platform: val("platform"),
@@ -180,15 +138,15 @@ function simpanData(){
     fotoIndonesia: val("fotoIndonesia")
   };
 
-  fetch(API,{
+  fetch(API, {
     method: "POST",
     mode: "no-cors",
     body: JSON.stringify(data)
   });
 
   document.getElementById("success").style.display = "block";
+  document.getElementById("error").style.display = "none";
 }
 </script>
-
 </body>
 </html>
