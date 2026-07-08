@@ -6,55 +6,56 @@
 <title>Titiport Admin</title>
 <style>
 body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;padding:15px}
-.box{max-width:600px;margin:auto;background:white;padding:22px;border-radius:18px;box-shadow:0 8px 25px rgba(0,0,0,.08)}
-h1{text-align:center;color:#0b8ff0}
+.box{max-width:600px;margin:auto;background:white;padding:22px;border-radius:18px}
 label{font-weight:bold;margin-top:12px;display:block}
-input,select,textarea{width:100%;box-sizing:border-box;padding:13px;margin-top:6px;border:1px solid #ddd;border-radius:10px;font-size:15px}
-button{width:100%;margin-top:18px;padding:15px;border:none;border-radius:12px;background:#0b8ff0;color:white;font-weight:bold;font-size:16px}
-.success{margin-top:15px;padding:12px;background:#e9fff0;color:#168a3a;border-radius:10px;display:none}
-.error{margin-top:15px;padding:12px;background:#fff0f0;color:#c0392b;border-radius:10px;display:none}
+input,select,textarea{width:100%;box-sizing:border-box;padding:13px;margin-top:6px;border:1px solid #ddd;border-radius:10px}
+button{width:100%;margin-top:18px;padding:15px;border:0;border-radius:12px;background:#0b8ff0;color:white;font-weight:bold}
 </style>
 </head>
-
 <body>
+
 <div class="box">
-<h1>📦 Titiport Admin</h1>
+<h2>📦 Titiport Admin</h2>
+
+<form method="GET" target="hiddenFrame" action="https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec" onsubmit="alert('Data dikirim. Cek TRACKING_PUBLIC ya.')">
+
+<input type="hidden" name="action" value="add">
 
 <label>Item Tracking ID</label>
-<input id="itemTrackingId" placeholder="Contoh: TTHC260709001">
+<input name="itemTrackingId">
 
 <label>Order ID</label>
-<input id="orderId" placeholder="Contoh: ORD260709001">
+<input name="orderId">
 
 <label>Customer ID</label>
-<input id="customerId" placeholder="Contoh: CUS00001">
+<input name="customerId">
 
 <label>Nama Customer</label>
-<input id="namaCustomer">
+<input name="namaCustomer">
 
 <label>No Telp / WA</label>
-<input id="noTelp">
+<input name="noTelp">
 
 <label>Alamat</label>
-<textarea id="alamat"></textarea>
+<textarea name="alamat"></textarea>
 
 <label>Kota</label>
-<input id="kota">
+<input name="kota">
 
 <label>Nama Barang</label>
-<input id="namaBarang">
+<input name="namaBarang">
 
 <label>Link Produk</label>
-<input id="linkProduk">
+<input name="linkProduk">
 
 <label>Qty</label>
-<input id="qty" type="number">
+<input name="qty">
 
 <label>Variasi</label>
-<input id="variasi">
+<input name="variasi">
 
 <label>Platform Sumber</label>
-<select id="platform">
+<select name="platform">
 <option>Taobao</option>
 <option>Pinduoduo</option>
 <option>1688</option>
@@ -64,17 +65,17 @@ button{width:100%;margin-top:18px;padding:15px;border:none;border-radius:12px;ba
 </select>
 
 <label>Jenis Pengiriman</label>
-<select id="jenisPengiriman">
+<select name="jenisPengiriman">
 <option>Handcarry</option>
 <option>Cargo Udara</option>
 <option>Cargo Laut</option>
 </select>
 
 <label>Batch ID</label>
-<input id="batchId" placeholder="Contoh: HC260711 / SEA260715">
+<input name="batchId">
 
 <label>Status Order</label>
-<select id="statusOrder">
+<select name="statusOrder">
 <option>Pesanan Masuk</option>
 <option>Pembayaran Diterima</option>
 <option>Proses Pembelian</option>
@@ -87,66 +88,25 @@ button{width:100%;margin-top:18px;padding:15px;border:none;border-radius:12px;ba
 </select>
 
 <label>ETA Manual</label>
-<input id="etaManual" type="date">
+<input name="etaManual" type="date">
 
 <label>Catatan Customer</label>
-<textarea id="catatanCustomer"></textarea>
+<textarea name="catatanCustomer"></textarea>
 
 <label>Foto Seller</label>
-<input id="fotoSeller" placeholder="Paste link Google Drive">
+<input name="fotoSeller">
 
 <label>Foto Warehouse</label>
-<input id="fotoWarehouse" placeholder="Paste link Google Drive">
+<input name="fotoWarehouse">
 
 <label>Foto Indonesia</label>
-<input id="fotoIndonesia" placeholder="Paste link Google Drive">
+<input name="fotoIndonesia">
 
-<button onclick="simpanData()">Simpan ke OMS</button>
+<button type="submit">Simpan ke OMS</button>
+</form>
 
-<div id="success" class="success">Data berhasil dikirim. Cek TRACKING_PUBLIC.</div>
-<div id="error" class="error">Data gagal dikirim. Coba cek Apps Script.</div>
+<iframe name="hiddenFrame" style="display:none"></iframe>
 </div>
 
-<script>
-const API = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
-
-function val(id){
-  return document.getElementById(id).value.trim();
-}
-
-function simpanData(){
-  const data = {
-    itemTrackingId: val("itemTrackingId"),
-    orderId: val("orderId"),
-    customerId: val("customerId"),
-    namaCustomer: val("namaCustomer"),
-    noTelp: val("noTelp"),
-    alamat: val("alamat"),
-    kota: val("kota"),
-    namaBarang: val("namaBarang"),
-    linkProduk: val("linkProduk"),
-    qty: val("qty"),
-    variasi: val("variasi"),
-    platform: val("platform"),
-    jenisPengiriman: val("jenisPengiriman"),
-    batchId: val("batchId"),
-    statusOrder: val("statusOrder"),
-    etaManual: val("etaManual"),
-    catatanCustomer: val("catatanCustomer"),
-    fotoSeller: val("fotoSeller"),
-    fotoWarehouse: val("fotoWarehouse"),
-    fotoIndonesia: val("fotoIndonesia")
-  };
-
-  fetch(API, {
-    method: "POST",
-    mode: "no-cors",
-    body: JSON.stringify(data)
-  });
-
-  document.getElementById("success").style.display = "block";
-  document.getElementById("error").style.display = "none";
-}
-</script>
 </body>
 </html>
