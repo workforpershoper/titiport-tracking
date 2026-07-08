@@ -4,13 +4,191 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Titiport Admin</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  margin:0;
+  padding:15px;
+}
+.box{
+  max-width:600px;
+  margin:auto;
+  background:white;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+h1{
+  text-align:center;
+  color:#0b8ff0;
+}
+label{
+  font-weight:bold;
+  margin-top:12px;
+  display:block;
+}
+input, select, textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px;
+  margin-top:6px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:15px;
+}
+button{
+  width:100%;
+  margin-top:18px;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:#0b8ff0;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+}
+.success{
+  margin-top:15px;
+  padding:12px;
+  background:#e9fff0;
+  color:#168a3a;
+  border-radius:10px;
+  display:none;
+}
+</style>
 </head>
 
 <body>
 
-<h2>Titiport OMS Admin</h2>
+<div class="box">
+  <h1>📦 Titiport Admin</h1>
 
-<p>Versi pertama Admin HP</p>
+  <label>Item Tracking ID</label>
+  <input id="itemTrackingId" placeholder="Contoh: TTHC260709001">
+
+  <label>Order ID</label>
+  <input id="orderId" placeholder="Contoh: ORD260709001">
+
+  <label>Customer ID</label>
+  <input id="customerId" placeholder="Contoh: CUS00001">
+
+  <label>Nama Customer</label>
+  <input id="namaCustomer">
+
+  <label>No Telp / WA</label>
+  <input id="noTelp">
+
+  <label>Alamat</label>
+  <textarea id="alamat"></textarea>
+
+  <label>Kota</label>
+  <input id="kota">
+
+  <label>Nama Barang</label>
+  <input id="namaBarang">
+
+  <label>Qty</label>
+  <input id="qty" type="number">
+
+  <label>Variasi</label>
+  <input id="variasi">
+
+  <label>Platform Sumber</label>
+  <select id="platform">
+    <option>Taobao</option>
+    <option>Pinduoduo</option>
+    <option>1688</option>
+    <option>JD</option>
+    <option>XHS</option>
+    <option>Offline Guangzhou</option>
+  </select>
+
+  <label>Jenis Pengiriman</label>
+  <select id="jenisPengiriman">
+    <option>Handcarry</option>
+    <option>Cargo Udara</option>
+    <option>Cargo Laut</option>
+  </select>
+
+  <label>Batch ID</label>
+  <input id="batchId" placeholder="Contoh: HC260711 / SEA260715">
+
+  <label>Status Order</label>
+  <select id="statusOrder">
+    <option>Pesanan Masuk</option>
+    <option>Pembayaran Diterima</option>
+    <option>Proses Pembelian</option>
+    <option>Barang Tiba di Warehouse</option>
+    <option>Barang Sedang Dikirim Menuju Indonesia</option>
+    <option>Barang Tiba di Indonesia</option>
+    <option>Proses Repack</option>
+    <option>Pengiriman Menuju Alamat Customer</option>
+    <option>Pesanan Diterima</option>
+  </select>
+
+  <label>ETA Manual</label>
+  <input id="etaManual" type="date">
+
+  <label>Catatan Customer</label>
+  <textarea id="catatanCustomer"></textarea>
+
+  <label>Foto Seller</label>
+  <input id="fotoSeller" placeholder="Paste link Google Drive">
+
+  <label>Foto Warehouse</label>
+  <input id="fotoWarehouse" placeholder="Paste link Google Drive">
+
+  <label>Foto Indonesia</label>
+  <input id="fotoIndonesia" placeholder="Paste link Google Drive">
+
+  <button onclick="simpanData()">Simpan ke OMS</button>
+
+  <div id="success" class="success">
+    Data berhasil dikirim. Cek Google Sheet / tracking website.
+  </div>
+</div>
+
+<script>
+const api = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
+
+function val(id){
+  return document.getElementById(id).value.trim();
+}
+
+function simpanData(){
+  const data = {
+    itemTrackingId: val("itemTrackingId"),
+    orderId: val("orderId"),
+    customerId: val("customerId"),
+    namaCustomer: val("namaCustomer"),
+    noTelp: val("noTelp"),
+    alamat: val("alamat"),
+    kota: val("kota"),
+    namaBarang: val("namaBarang"),
+    qty: val("qty"),
+    variasi: val("variasi"),
+    platform: val("platform"),
+    jenisPengiriman: val("jenisPengiriman"),
+    batchId: val("batchId"),
+    statusOrder: val("statusOrder"),
+    etaManual: val("etaManual"),
+    catatanCustomer: val("catatanCustomer"),
+    fotoSeller: val("fotoSeller"),
+    fotoWarehouse: val("fotoWarehouse"),
+    fotoIndonesia: val("fotoIndonesia")
+  };
+
+  fetch(api, {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  });
+
+  document.getElementById("success").style.display = "block";
+}
+</script>
 
 </body>
 </html>
