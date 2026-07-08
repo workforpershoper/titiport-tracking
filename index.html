@@ -192,16 +192,30 @@ button{
 <script>
 const api = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
 
+function ubahLinkDrive(url){
+  if(!url) return "";
+
+  let match = url.match(/\/d\/([^/]+)/);
+
+  if(match && match[1]){
+    return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1000";
+  }
+
+  return url;
+}
+
 function fotoHTML(label, url){
-  if(!url || url.trim() === ""){
+  if(!url || url.trim()===""){
     return "";
   }
+
+  const imgUrl = ubahLinkDrive(url);
 
   return `
     <div class="photo-box">
       <p>${label}</p>
       <a href="${url}" target="_blank">
-        <img src="${url}" alt="${label}">
+        <img src="${imgUrl}" alt="${label}">
       </a>
     </div>
   `;
