@@ -103,6 +103,38 @@ button{
   font-size:14px;
 }
 
+.photo-section{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid #e6edf5;
+}
+
+.photo-grid{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.photo-box{
+  width:31%;
+  min-width:150px;
+}
+
+.photo-box p{
+  font-weight:bold;
+  margin:8px 0;
+  font-size:14px;
+}
+
+.photo-box img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:12px;
+  border:1px solid #ddd;
+  background:#eee;
+}
+
 .error{
   margin-top:20px;
   background:#fff0f0;
@@ -131,6 +163,14 @@ button{
   h1{
     font-size:24px;
   }
+
+  .photo-box{
+    width:100%;
+  }
+
+  .photo-box img{
+    height:auto;
+  }
 }
 </style>
 </head>
@@ -151,6 +191,21 @@ button{
 
 <script>
 const api = "https://script.google.com/macros/s/AKfycbzMfhZh1BVumJ4UozTcSPqUfuqO3ArFiOSJWnVkHalsDjESHdIi94WtkFWTz7oqMCTu/exec";
+
+function fotoHTML(label, url){
+  if(!url || url.trim() === ""){
+    return "";
+  }
+
+  return `
+    <div class="photo-box">
+      <p>${label}</p>
+      <a href="${url}" target="_blank">
+        <img src="${url}" alt="${label}">
+      </a>
+    </div>
+  `;
+}
 
 function cekTracking(){
   const q = document.getElementById("trackingInput").value.trim();
@@ -174,6 +229,16 @@ function cekTracking(){
       let html = "";
 
       data.data.forEach(item => {
+        const fotoSeller = item["Foto Seller URL"] || "";
+        const fotoWarehouse = item["Foto Warehouse URL"] || "";
+        const fotoIndonesia = item["Foto Indonesia URL"] || "";
+
+        const photos = `
+          ${fotoHTML("Foto Seller", fotoSeller)}
+          ${fotoHTML("Foto Warehouse", fotoWarehouse)}
+          ${fotoHTML("Foto Tiba Indonesia", fotoIndonesia)}
+        `;
+
         html += `
           <div class="card">
             <div class="badge">${item["Jenis Pengiriman"] || "Titiport Order"}</div>
@@ -188,6 +253,13 @@ function cekTracking(){
             <div class="row"><span class="label">ETA:</span> ${item["ETA Manual"] || "-"}</div>
 
             <div class="status">Status: ${item["Status Order"] || "-"}</div>
+
+            ${photos.trim() !== "" ? `
+              <div class="photo-section">
+                <h3>📷 Dokumentasi Barang</h3>
+                <div class="photo-grid">${photos}</div>
+              </div>
+            ` : ""}
 
             <div class="note">${item["Catatan Customer"] || ""}</div>
           </div>
