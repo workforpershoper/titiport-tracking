@@ -8,37 +8,30 @@
 <style>
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#f4f7fb;
   color:#222;
 }
-
 .container{
   max-width:760px;
-  margin:30px auto;
+  margin:40px auto;
   padding:20px;
 }
-
 .box{
   background:white;
-  padding:26px;
-  border-radius:18px;
+  padding:28px;
+  border-radius:20px;
   box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
-
 h1{
   text-align:center;
   color:#0b8ff0;
-  margin-bottom:8px;
 }
-
 .subtitle{
   text-align:center;
   color:#666;
-  font-size:14px;
-  margin-bottom:24px;
+  margin-bottom:25px;
 }
-
 input{
   width:100%;
   box-sizing:border-box;
@@ -47,94 +40,50 @@ input{
   border:1px solid #ddd;
   border-radius:12px;
 }
-
 button{
   width:100%;
   margin-top:12px;
   padding:15px;
-  font-size:16px;
   border:none;
   border-radius:12px;
   background:#0b8ff0;
   color:white;
-  cursor:pointer;
   font-weight:bold;
+  font-size:16px;
 }
-
 .card{
+  margin-top:20px;
   background:#f9fbff;
-  margin-top:18px;
   padding:18px;
-  border-radius:14px;
+  border-radius:15px;
   border:1px solid #e6edf5;
 }
-
 .badge{
   display:inline-block;
-  padding:6px 10px;
+  padding:7px 12px;
   background:#e8f4ff;
   color:#0b8ff0;
   border-radius:999px;
-  font-size:13px;
   font-weight:bold;
-  margin-bottom:10px;
+  font-size:13px;
 }
-
 .row{
-  margin:8px 0;
-  line-height:1.45;
+  margin:9px 0;
 }
-
 .label{
   font-weight:bold;
 }
-
 .status{
-  margin-top:12px;
-  padding:12px;
-  border-radius:12px;
+  margin-top:14px;
+  padding:13px;
   background:#fff7e6;
-  font-weight:bold;
-}
-
-.note{
-  margin-top:10px;
-  color:#555;
-  font-size:14px;
-}
-
-.photo-section{
-  margin-top:16px;
-  padding-top:12px;
-  border-top:1px solid #e6edf5;
-}
-
-.photo-grid{
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.photo-box{
-  width:31%;
-  min-width:150px;
-}
-
-.photo-box p{
-  font-weight:bold;
-  margin:8px 0;
-  font-size:14px;
-}
-
-.photo-box img{
-  width:100%;
-  height:130px;
-  object-fit:cover;
   border-radius:12px;
-  border:1px solid #ddd;
-  background:#eee;
+  font-weight:bold;
 }
-
+.note{
+  margin-top:12px;
+  color:#555;
+}
 .error{
   margin-top:20px;
   background:#fff0f0;
@@ -143,11 +92,32 @@ button{
   border-radius:12px;
   text-align:center;
 }
-
 .loading{
   margin-top:20px;
   text-align:center;
   color:#555;
+}
+.photo-section{
+  margin-top:18px;
+  border-top:1px solid #e6edf5;
+  padding-top:15px;
+}
+.photo-grid{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.photo-box{
+  width:31%;
+  min-width:150px;
+}
+.photo-box p{
+  font-weight:bold;
+}
+.photo-box img{
+  width:100%;
+  border-radius:12px;
+  border:1px solid #ddd;
 }
 
 @media(max-width:600px){
@@ -155,21 +125,11 @@ button{
     margin:10px auto;
     padding:12px;
   }
-
   .box{
     padding:20px;
   }
-
-  h1{
-    font-size:24px;
-  }
-
   .photo-box{
     width:100%;
-  }
-
-  .photo-box img{
-    height:auto;
   }
 }
 </style>
@@ -182,7 +142,7 @@ button{
     <h1>📦 Titiport Tracking</h1>
     <div class="subtitle">Cek status order berdasarkan Tracking ID, Order ID, atau Nomor WhatsApp</div>
 
-    <input id="trackingInput" placeholder="Contoh: TTHC260707001 / ORD260707001 / 081234567890">
+    <input id="trackingInput" placeholder="Masukkan Tracking ID / Order ID / Nomor WA">
     <button onclick="cekTracking()">Cek Status</button>
 
     <div id="hasil"></div>
@@ -190,13 +150,12 @@ button{
 </div>
 
 <script>
-const api = "https://script.google.com/macros/s/AKfycbzd7mMlzp4_YIlLWAsbkEpdSYTHSWKgP8p8DcVSHzdM9NCJG1EAmuiENDkEhMkWrFv9/exec";
+const API = "https://script.google.com/macros/s/AKfycbzd7mMlzp4_YIlLWAsbkEpdSYTHSWKgP8p8DcVSHzdM9NCJG1EAmuiENDkEhMkWrFv9/exec";
 
 function ubahLinkDrive(url){
   if(!url) return "";
 
-  let match = url.match(/\/d\/([^/]+)/);
-
+  const match = url.match(/\/d\/([^/]+)/);
   if(match && match[1]){
     return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1000";
   }
@@ -205,9 +164,7 @@ function ubahLinkDrive(url){
 }
 
 function fotoHTML(label, url){
-  if(!url || url.trim()===""){
-    return "";
-  }
+  if(!url || url.trim() === "") return "";
 
   const imgUrl = ubahLinkDrive(url);
 
@@ -232,26 +189,36 @@ function cekTracking(){
 
   hasil.innerHTML = `<div class="loading">Sedang mencari data order...</div>`;
 
-  fetch(api + "?q=" + encodeURIComponent(q))
-    .then(res => res.json())
+  fetch(API + "?q=" + encodeURIComponent(q))
+    .then(response => {
+      if(!response.ok){
+        throw new Error("HTTP error " + response.status);
+      }
+      return response.json();
+    })
     .then(data => {
       if(!data.success || !data.data || data.data.length === 0){
-        hasil.innerHTML = `<div class="error">Order tidak ditemukan. Pastikan nomor yang dimasukkan benar.</div>`;
+        hasil.innerHTML = `<div class="error">Order tidak ditemukan. Coba cek kembali nomor yang dimasukkan.</div>`;
         return;
       }
 
       let html = "";
 
       data.data.forEach(item => {
-        const fotoSeller = item["Foto Seller URL"] || "";
-        const fotoWarehouse = item["Foto Warehouse URL"] || "";
-        const fotoIndonesia = item["Foto Indonesia URL"] || "";
+        const fotoSeller = fotoHTML("Foto Seller", item["Foto Seller URL"] || "");
+        const fotoWarehouse = fotoHTML("Foto Warehouse", item["Foto Warehouse URL"] || "");
+        const fotoIndonesia = fotoHTML("Foto Indonesia", item["Foto Indonesia URL"] || "");
 
-        const photos = `
-          ${fotoHTML("Foto Seller", fotoSeller)}
-          ${fotoHTML("Foto Warehouse", fotoWarehouse)}
-          ${fotoHTML("Foto Tiba Indonesia", fotoIndonesia)}
-        `;
+        const fotoSection = (fotoSeller || fotoWarehouse || fotoIndonesia) ? `
+          <div class="photo-section">
+            <h3>📷 Dokumentasi Barang</h3>
+            <div class="photo-grid">
+              ${fotoSeller}
+              ${fotoWarehouse}
+              ${fotoIndonesia}
+            </div>
+          </div>
+        ` : "";
 
         html += `
           <div class="card">
@@ -268,12 +235,7 @@ function cekTracking(){
 
             <div class="status">Status: ${item["Status Order"] || "-"}</div>
 
-            ${photos.trim() !== "" ? `
-              <div class="photo-section">
-                <h3>📷 Dokumentasi Barang</h3>
-                <div class="photo-grid">${photos}</div>
-              </div>
-            ` : ""}
+            ${fotoSection}
 
             <div class="note">${item["Catatan Customer"] || ""}</div>
           </div>
@@ -282,8 +244,14 @@ function cekTracking(){
 
       hasil.innerHTML = html;
     })
-    .catch(err => {
-      hasil.innerHTML = `<div class="error">Terjadi kendala saat mengambil data. Coba beberapa saat lagi.</div>`;
+    .catch(error => {
+      hasil.innerHTML = `
+        <div class="error">
+          Terjadi kendala saat mengambil data.<br>
+          Kemungkinan link API belum benar / Apps Script belum aktif.
+        </div>
+      `;
+      console.error(error);
     });
 }
 </script>
